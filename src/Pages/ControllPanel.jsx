@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AdmissionForm from './AdmissionForm';
 import ReceiptModule from './ReceiptModule';
+import StudentPortal from './StudentPortal';
 
 const ControlPanel = () => {
   const [selectedBranch, setSelectedBranch] = useState('PUCollege');
@@ -38,9 +39,12 @@ const ControlPanel = () => {
           </div>
         </div>
       </div>
-
+{/* 
      <div className='flex'> <AdmissionForm/>
-      <ReceiptModule/></div>
+      <ReceiptModule/>
+      <StudentPortal/>
+      
+      </div> */}
     </div>
   );
 };

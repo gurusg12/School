@@ -1,53 +1,144 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const AdmissionForm = () => {
-  const [student, setStudent] = useState({
-    name: '',
-    mobile: '',
-    city: '',
-    totalFee: 50000,
-    paid: 0,
-    paymentMethod: 'Cash'
-  });
+  const [formData , setFormData] = useState({ Name: '',Mobile : "", City: '' });
+  const[data , setdata] = useState({})
 
-  const balance = student.totalFee - student.paid;
+  function hell(){
+  const Data = JSON.parse(localStorage.getItem("student-info"))
+  setdata(Data)
+  }
+  useEffect(()=>{
 
-    localStorage.setItem("stdinfo" , JSON.stringify(student))
+    
+    hell()
+      console.log(data)
 
+  },[])
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setdata((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Submitted:', formData);
+    localStorage.setItem("student-info" , JSON.stringify(data))
+    setdata({ Name: '',Mobile : "", City: '' })
+  };
+
+
+const [Adminfo , setAdminfo] = useState({Fee : "" , Paid : "" })
+const AdmChange = (q)=>{
+  // setbalance((Adminfo.Fee - Adminfo.Paid))
+  const {name , value } = q.target
+  setAdminfo((prev)=>(
+    {...prev , [name] : value}
+  ))
+ 
+}
+// const Balance = (Number(Adminfo.Fee)- Number(Adminfo.Paid))
+const Balance = Adminfo.Fee-Adminfo.Paid 
+const AdmSubmit = (q)=>{
+  q.preventDefault()
+  const finaldata = {...Adminfo , Balance : Balance, Date : new Date(Date.now()).toLocaleString()}
+
+  localStorage.setItem("adm-info" , JSON.stringify(finaldata))
+  setAdminfo({Fee : "" , Paid : "" , Balance : "" })
+}
 
   return (
-    <div className="max-w-md mx-auto bg-white p-8 border rounded-md">
-      <h2 className="text-xl font-bold mb-4">New Student Admission</h2>
-      <form className="space-y-4">
-        <input type="text" placeholder="Student Name" className="w-full p-2 border" />
-        <input type="text" placeholder="Mobile" className="w-full p-2 border" />
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl shadow-slate-200/60 p-8 border border-slate-100">
         
-        <div className="border-t pt-4">
-          <label className="block text-sm font-medium">Fee Details</label>
-          <input type="number" value={student.totalFee} readOnly className="w-full p-2 bg-gray-100 border" />
-          
-          <div className="flex gap-2 mt-2">
-            <input 
-              type="number" 
-              placeholder="Paid Amount" 
-              onChange={(e) => setStudent({...student, paid: e.target.value})}
-              className="w-full p-2 border" 
-            />
-            <select className="p-2 border">
-              <option>Cash</option>
-              <option>Transfer</option>
-            </select>
-          </div>
+        {/* Header Section */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-slate-800 tracking-tight">
+            Admission Form
+          </h2>
+       
         </div>
 
-        <div className="p-3 bg-red-50 text-red-700 font-bold">
-          Balance to Pay: {balance}
+        <form onSubmit={handleSubmit} className="space-y-6">
+  <div className="group gap-3 flex flex-col">
+            <input
+              type="text"
+              name="Name"
+              required
+              placeholder="e.g. Alex Rivera"
+              value={data.Name}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 placeholder:text-slate-400"
+            />
+              <input
+              type="number"
+              name="Mobile"
+              required
+              placeholder="e.g. Alex Rivera"
+              value={data.Mobile}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 placeholder:text-slate-400"
+            />
+             <input
+              type="text"
+              name="City"
+              required
+              placeholder="e.g. Alex Rivera"
+              value={data.City}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 placeholder:text-slate-400"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-blue-200 transition-all active:scale-[0.98] focus:ring-4 focus:ring-blue-300"
+          >  Submit Application
+          </button>
+        </form>
+
+
+        <div className='mt-5 p-1 '>
+            <form onSubmit={AdmSubmit} className="space-y-6">
+  <div className="group gap-3 flex flex-col">
+            <input
+              type='number'
+              name="Fee"
+              required
+              placeholder="Feee"
+              value={Adminfo.Fee}
+              onChange={AdmChange}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 placeholder:text-slate-400"
+            />
+              <input
+              type="number"
+              name="Paid"
+              required
+              placeholder="Paid here "
+              value={Adminfo.Paid}
+              onChange={AdmChange}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 placeholder:text-slate-400"
+            />
+             <input
+              type="number"
+              // name="Balance"
+              required
+              readonly
+              placeholder="Balance Amount..."
+              value={Balance}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 placeholder:text-slate-400"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-blue-200 transition-all active:scale-[0.98] focus:ring-4 focus:ring-blue-300"
+          >  Submit Application
+          </button>
+        </form>
         </div>
-        
-        <button className="w-full bg-blue-600 text-white py-2 rounded">Register Student</button>
-      </form>
+      </div>
     </div>
   );
 };
 
-export default AdmissionForm
+export default AdmissionForm;
