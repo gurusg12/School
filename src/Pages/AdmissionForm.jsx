@@ -96,8 +96,6 @@ const AdmSubmit = (q)=>{
           >  Submit Application
           </button>
         </form>
-
-
         <div className='mt-5 p-1 '>
             <form onSubmit={AdmSubmit} className="space-y-6">
   <div className="group gap-3 flex flex-col">
