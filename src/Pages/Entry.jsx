@@ -23,9 +23,8 @@ const Entry = () => {
         { name: 'Primary Schools', icon: <School size={20} />, count: 6, color: 'bg-orange-500', Page: "primarySchools" },
         { name: 'High Schools', icon: <BookOpen size={20} />, count: 5, color: 'bg-rose-500', Page: "highSchools" },
     ];
-
     return (
-        <div className="flex h-screen bg-gray-50 font-sans">
+        <div className="flex h-screen bg-gray-500 font-sans">
             {/* Sidebar */}
             <aside className="w-64 bg-slate-900 text-white flex flex-col">
                 <div className="p-6 border-b border-slate-800">
