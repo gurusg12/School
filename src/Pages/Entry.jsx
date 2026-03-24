@@ -24,7 +24,7 @@ const Entry = () => {
         { name: 'High Schools', icon: <BookOpen size={20} />, count: 5, color: 'bg-rose-500', Page: "highSchools" },
     ];
     return (
-        <div className="flex h-screen bg-gray-500 font-sans">
+        <div className="flex h-screen bg-gray-50 font-sans">
             {/* Sidebar */}
             <aside className="w-64 bg-slate-900 text-white flex flex-col">
                 <div className="p-6 border-b border-slate-800">
