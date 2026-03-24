@@ -32,7 +32,6 @@ const Entry = () => {
                     <h1 className="text-xl font-bold tracking-tight">EduTrust Admin</h1>
                     <p className="text-xs text-slate-400 mt-1">Central Management System</p>
                 </div>
-
                 <nav className="flex-1 p-4 space-y-2">
                     <div className="flex items-center gap-3 p-3 bg-blue-600 rounded-lg cursor-pointer">
                         <LayoutDashboard size={20} />
@@ -42,7 +41,6 @@ const Entry = () => {
                     <div className="pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase px-3">
                         Institutions
                     </div>
-
                     {branches.map((branch) => (
                         <div key={branch.name} >
                             <Link to={`/${branch.Page}`} className="flex items-center justify-between p-3 hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
@@ -53,7 +51,6 @@ const Entry = () => {
                                 <span className="text-xs bg-slate-700 px-2 py-0.5 rounded-full">{branch.count}</span>
                             </Link>
                         </div>
-
                     ))}
                 </nav>
 
