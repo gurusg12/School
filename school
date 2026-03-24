@@ -1,0 +1,43 @@
+Fees Management / School Accounting Software
+
+
+=======
+Student
+=======
+StudentId (Automatically)
+Name
+Mobile
+City
+
+=========
+Admission
+=========
+StudentId (User Input)
+Date   : 24032026
+Fee    : 50000
+Paid   : 10000 (Cash/Transfer)
+Balance: 35000
+ 
+Student Manaul
+
+
+Branch (Selection)
+==================
+PUCollege
+DegreeCollege
+Primary
+HighSchool
+Hostal
+
+Receipt_Module
+==============
+StudentId
+Date 25032026
+Previous Balance : 35000
+Amount 		 : 10000 (Cash/Transfer)
+Balance		 : 25000	
+Narration
+
+
+
+

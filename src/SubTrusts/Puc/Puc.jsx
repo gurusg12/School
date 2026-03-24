@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 
-const HighSchools = () => {
+const Puc = () => {
   const [students, setStudents] = useState([]);
   const [search, setSearch] = useState("");
 
   const [form, setForm] = useState({
-    roll: "",
+    id: "",
     name: "",
-    className: "",
-    section: "",
-    parent: "",
+    stream: "",
+    year: "",
+    combination: "",
     phone: "",
     file: null,
     preview: null,
@@ -33,36 +33,36 @@ const HighSchools = () => {
 
   // Add student
   const addStudent = () => {
-    if (!form.roll || !form.name) {
-      return alert("Roll Number and Name required");
+    if (!form.id || !form.name) {
+      return alert("Student ID and Name required");
     }
 
-    // Prevent duplicate roll
-    const exists = students.find((s) => s.roll === form.roll);
-    if (exists) return alert("Roll number already exists");
+    // Prevent duplicate ID
+    const exists = students.find((s) => s.id === form.id);
+    if (exists) return alert("Student ID already exists");
 
     setStudents([...students, form]);
 
     setForm({
-      roll: "",
+      id: "",
       name: "",
-      className: "",
-      section: "",
-      parent: "",
+      stream: "",
+      year: "",
+      combination: "",
       phone: "",
       file: null,
       preview: null,
     });
   };
 
-  // Delete
-  const deleteStudent = (roll) => {
-    setStudents(students.filter((s) => s.roll !== roll));
+  // Delete student
+  const deleteStudent = (id) => {
+    setStudents(students.filter((s) => s.id !== id));
   };
 
   // Filter
   const filtered = students.filter((s) =>
-    `${s.name} ${s.className} ${s.roll} ${s.section}`
+    `${s.name} ${s.stream} ${s.year} ${s.id}`
       .toLowerCase()
       .includes(search.toLowerCase())
   );
@@ -70,13 +70,13 @@ const HighSchools = () => {
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">
-        High School Admin Panel
+        PU College Admin Panel
       </h1>
 
       {/* 🔍 Search */}
       <input
         type="text"
-        placeholder="Search by name, class, roll..."
+        placeholder="Search by name, stream, ID..."
         className="border p-2 w-full mb-4"
         onChange={(e) => setSearch(e.target.value)}
       />
@@ -87,9 +87,9 @@ const HighSchools = () => {
 
         <input
           type="text"
-          name="roll"
-          placeholder="Roll Number"
-          value={form.roll}
+          name="id"
+          placeholder="Student ID"
+          value={form.id}
           onChange={handleChange}
           className="border p-2 m-1"
         />
@@ -105,27 +105,27 @@ const HighSchools = () => {
 
         <input
           type="text"
-          name="className"
-          placeholder="Class (e.g. 10)"
-          value={form.className}
+          name="stream"
+          placeholder="Stream (Science/Commerce/Arts)"
+          value={form.stream}
           onChange={handleChange}
           className="border p-2 m-1"
         />
 
         <input
           type="text"
-          name="section"
-          placeholder="Section (A/B/C)"
-          value={form.section}
+          name="year"
+          placeholder="Year (1st PUC / 2nd PUC)"
+          value={form.year}
           onChange={handleChange}
           className="border p-2 m-1"
         />
 
         <input
           type="text"
-          name="parent"
-          placeholder="Parent Name"
-          value={form.parent}
+          name="combination"
+          placeholder="Combination (PCMB/CEBA...)"
+          value={form.combination}
           onChange={handleChange}
           className="border p-2 m-1"
         />
@@ -153,7 +153,7 @@ const HighSchools = () => {
 
         <button
           onClick={addStudent}
-          className="bg-green-600 text-white px-4 py-2 mt-2"
+          className="bg-indigo-600 text-white px-4 py-2 mt-2"
         >
           Add Student
         </button>
@@ -167,7 +167,7 @@ const HighSchools = () => {
 
         {filtered.map((s) => (
           <div
-            key={s.roll}
+            key={s.id}
             className="flex justify-between items-center border p-3 mb-2"
           >
             <div className="flex items-center gap-3">
@@ -181,13 +181,13 @@ const HighSchools = () => {
 
               <div>
                 <p className="font-medium">
-                  {s.name} (Roll: {s.roll})
+                  {s.name} ({s.id})
                 </p>
                 <p className="text-sm text-gray-600">
-                  Class {s.className} - {s.section}
+                  {s.stream} - {s.year}
                 </p>
                 <p className="text-sm text-gray-500">
-                  Parent: {s.parent}
+                  Combination: {s.combination}
                 </p>
                 <p className="text-sm text-gray-500">
                   📞 {s.phone}
@@ -196,7 +196,7 @@ const HighSchools = () => {
             </div>
 
             <button
-              onClick={() => deleteStudent(s.roll)}
+              onClick={() => deleteStudent(s.id)}
               className="bg-red-500 text-white px-3 py-1"
             >
               Delete
@@ -208,4 +208,4 @@ const HighSchools = () => {
   );
 };
 
-export default HighSchools;
+export default Puc;
