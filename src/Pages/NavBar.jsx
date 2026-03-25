@@ -13,15 +13,13 @@ import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const branches = [
-    { name: "PU Colleges", icon: <GraduationCap size={20} />, count: 4, Page: "puc" },
-    { name: "Paramedical", icon: <Stethoscope size={20} />, count: 2, Page: "paramedical" },
-    { name: "Degree Colleges", icon: <Building2 size={20} />, count: 3, Page: "degreeColleges" },
-    { name: "Primary Schools", icon: <School size={20} />, count: 6, Page: "primarySchools" },
-    { name: "High Schools", icon: <BookOpen size={20} />, count: 5, Page: "highSchools" },
+    { name: "Primary Schools", icon: <School size={20} />, Page: "primarySchools" },
+    { name: "High Schools", icon: <BookOpen size={20} />,  Page: "highSchools" },
+    { name: "PU Colleges", icon: <GraduationCap size={20} /> ,Page: "puc" },
+    { name: "Paramedical", icon: <Stethoscope size={20} /> ,count: 2, Page: "paramedical" },
+    { name: "Degree Colleges", icon: <Building2 size={20} />, Page: "degreeColleges" },
   ];
-
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   return (

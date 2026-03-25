@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserPlus, Phone, MapPin } from 'lucide-react';
 
 const StudentPortal = () => {
+  useEffect(()=>{
+    localStorage.removeItem("student-info")
+  },[])
   const [info, setinfo] = useState({
     Name: "",
     Mobile: "",
     City: ""
   });
-  
   const navigate = useNavigate();
 
   const change = (e) => {
@@ -16,11 +18,10 @@ const StudentPortal = () => {
     setinfo((prev) => ({ ...prev, [name]: value }));
   };
 
+  const Id = info.City.slice(0 , 3)+info.Name.slice(0 , 3) +info.Mobile.slice(0 , 5)
   const submit = (e) => {
     e.preventDefault();    
-    const updatedData = { ...info, id: Date.now() };
-    
-    // 3. Save the updated array
+    const updatedData = {...info, Date: new Date(Date.now()).toLocaleString(), StdId : Id.toLocaleLowerCase()};    
     localStorage.setItem("student-info", JSON.stringify(updatedData));
     navigate('/admission');
   };

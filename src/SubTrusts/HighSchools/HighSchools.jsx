@@ -1,211 +1,187 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Search,
+  Phone,
+  MapPin,
+  Calendar,
+  IndianRupee,
+  CheckCircle,
+  AlertCircle,
+  Users,
+} from "lucide-react";
 
-const HighSchools = () => {
-  const [students, setStudents] = useState([]);
+const DegreeColleges = () => {
+  const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
 
-  const [form, setForm] = useState({
-    roll: "",
-    name: "",
-    className: "",
-    section: "",
-    parent: "",
-    phone: "",
-    file: null,
-    preview: null,
-  });
+  useEffect(() => {
+    const stored =
+      JSON.parse(localStorage.getItem("degreeColleges")) || [];
+    setData(stored);
+  }, []);
 
-  // Handle input
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-
-    if (name === "file") {
-      const file = files[0];
-      setForm({
-        ...form,
-        file,
-        preview: URL.createObjectURL(file),
-      });
-    } else {
-      setForm({ ...form, [name]: value });
-    }
-  };
-
-  // Add student
-  const addStudent = () => {
-    if (!form.roll || !form.name) {
-      return alert("Roll Number and Name required");
-    }
-
-    // Prevent duplicate roll
-    const exists = students.find((s) => s.roll === form.roll);
-    if (exists) return alert("Roll number already exists");
-
-    setStudents([...students, form]);
-
-    setForm({
-      roll: "",
-      name: "",
-      className: "",
-      section: "",
-      parent: "",
-      phone: "",
-      file: null,
-      preview: null,
-    });
-  };
-
-  // Delete
-  const deleteStudent = (roll) => {
-    setStudents(students.filter((s) => s.roll !== roll));
-  };
-
-  // Filter
-  const filtered = students.filter((s) =>
-    `${s.name} ${s.className} ${s.roll} ${s.section}`
-      .toLowerCase()
-      .includes(search.toLowerCase())
+  // 🔍 Search
+  const filteredData = data.filter((item) =>
+    Object.values(item).join(" ").toLowerCase().includes(search.toLowerCase())
   );
 
+  // 📊 Calculations
+  const totalStudents = filteredData.length;
+
+  const totalFee = filteredData.reduce(
+    (sum, s) => sum + Number(s.Fee || 0),
+    0
+  );
+
+  const totalPaid = filteredData.reduce(
+    (sum, s) => sum + Number(s.Paid || 0),
+    0
+  );
+
+  const totalPending = totalFee - totalPaid;
+
+  const collectionRate = totalFee
+    ? ((totalPaid / totalFee) * 100).toFixed(1)
+    : 0;
+
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">
-        High School Admin Panel
-      </h1>
+    <div className="min-h-screen bg-slate-950 text-white p-6">
 
-      {/* 🔍 Search */}
-      <input
-        type="text"
-        placeholder="Search by name, class, roll..."
-        className="border p-2 w-full mb-4"
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      {/* Header */}
+      <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
+        <div>
+          <h1 className="text-3xl font-bold flex items-center gap-2">
+            <Users className="text-blue-500" />
+            Students Dashboard
+          </h1>
+          <p className="text-gray-400 text-sm mt-1">
+            Manage student fee records efficiently
+          </p>
+        </div>
 
-      {/* 🧾 Form */}
-      <div className="border p-4 rounded mb-6">
-        <h2 className="font-semibold mb-2">Add Student</h2>
-
-        <input
-          type="text"
-          name="roll"
-          placeholder="Roll Number"
-          value={form.roll}
-          onChange={handleChange}
-          className="border p-2 m-1"
-        />
-
-        <input
-          type="text"
-          name="name"
-          placeholder="Student Name"
-          value={form.name}
-          onChange={handleChange}
-          className="border p-2 m-1"
-        />
-
-        <input
-          type="text"
-          name="className"
-          placeholder="Class (e.g. 10)"
-          value={form.className}
-          onChange={handleChange}
-          className="border p-2 m-1"
-        />
-
-        <input
-          type="text"
-          name="section"
-          placeholder="Section (A/B/C)"
-          value={form.section}
-          onChange={handleChange}
-          className="border p-2 m-1"
-        />
-
-        <input
-          type="text"
-          name="parent"
-          placeholder="Parent Name"
-          value={form.parent}
-          onChange={handleChange}
-          className="border p-2 m-1"
-        />
-
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          value={form.phone}
-          onChange={handleChange}
-          className="border p-2 m-1"
-        />
-
-        <input type="file" name="file" onChange={handleChange} />
-
-        {form.preview && (
-          <img
-            src={form.preview}
-            alt="preview"
-            className="w-20 mt-2 rounded"
+        {/* Search */}
+        <div className="relative w-full sm:w-80">
+          <Search className="absolute left-3 top-3 text-gray-400" size={18} />
+          <input
+            type="text"
+            placeholder="Search students..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-900 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        )}
-
-        <br />
-
-        <button
-          onClick={addStudent}
-          className="bg-green-600 text-white px-4 py-2 mt-2"
-        >
-          Add Student
-        </button>
+        </div>
       </div>
 
-      {/* 📋 Student List */}
-      <div>
-        <h2 className="font-semibold mb-2">Student Records</h2>
+      {/* 📊 Stats */}
+      <div className="grid sm:grid-cols-4 gap-4 mb-8">
 
-        {filtered.length === 0 && <p>No records found</p>}
+        {/* Students */}
+        <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800">
+          <p className="text-gray-400 text-sm">Total Students</p>
+          <h2 className="text-2xl font-bold">{totalStudents}</h2>
+        </div>
 
-        {filtered.map((s) => (
-          <div
-            key={s.roll}
-            className="flex justify-between items-center border p-3 mb-2"
-          >
-            <div className="flex items-center gap-3">
-              {s.preview && (
-                <img
-                  src={s.preview}
-                  alt="student"
-                  className="w-12 h-12 rounded-full"
-                />
-              )}
+        {/* Expected */}
+        <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800">
+          <p className="text-gray-400 text-sm">Total Expected Revenue</p>
+          <h2 className="text-2xl font-bold text-blue-400">
+            ₹{totalFee}
+          </h2>
+        </div>
 
-              <div>
-                <p className="font-medium">
-                  {s.name} (Roll: {s.roll})
+        {/* Collected */}
+        <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800">
+          <p className="text-gray-400 text-sm">Collected Revenue</p>
+          <h2 className="text-2xl font-bold text-green-400">
+            ₹{totalPaid}
+          </h2>
+          <p className="text-xs text-gray-500 mt-1">
+            {collectionRate}% collected
+          </p>
+        </div>
+
+        {/* Pending */}
+        <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800">
+          <p className="text-gray-400 text-sm">Pending Revenue</p>
+          <h2 className="text-2xl font-bold text-red-400">
+            ₹{totalPending}
+          </h2>
+        </div>
+      </div>
+
+      {/* 🧾 Cards */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {filteredData.map((e, i) => {
+          const fee = Number(e.Fee || 0);
+          const paid = Number(e.Paid || 0);
+          const remaining = fee - paid;
+
+          const percent = fee ? (paid / fee) * 100 : 0;
+
+          return (
+            <div
+              key={i}
+              className="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300"
+            >
+              {/* Top */}
+              <div className="flex justify-between items-center mb-3">
+                <h2 className="text-lg font-semibold">{e.Name}</h2>
+
+                {remaining === 0 ? (
+                  <span className="flex items-center gap-1 text-green-400 text-xs">
+                    <CheckCircle size={14} /> Paid
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-1 text-red-400 text-xs">
+                    <AlertCircle size={14} /> Due
+                  </span>
+                )}
+              </div>
+              {/* Info */}
+              <div className="space-y-2 text-sm text-gray-300">
+                <p className="flex items-center gap-2">
+                  <Phone size={14} /> {e.Mobile}
                 </p>
-                <p className="text-sm text-gray-600">
-                  Class {s.className} - {s.section}
+                <p className="flex items-center gap-2">
+                  <MapPin size={14} /> {e.City}
                 </p>
-                <p className="text-sm text-gray-500">
-                  Parent: {s.parent}
+                <p className="flex items-center gap-2">
+                  <Calendar size={14} /> {e.Date}
                 </p>
-                <p className="text-sm text-gray-500">
-                  📞 {s.phone}
+              </div>
+
+              {/* Fee */}
+              <div className="mt-4">
+                <div className="flex justify-between text-xs text-gray-400 mb-1">
+                  <span className="flex items-center gap-1">
+                    <IndianRupee size={12} /> {paid}
+                  </span>
+                  <span>₹{fee}</span>
+                </div>
+
+                {/* Progress */}
+                <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-blue-500"
+                    style={{ width: `${percent}%` }}
+                  ></div>
+                </div>
+
+                <p className="text-xs text-red-400 mt-2">
+                  Remaining: ₹{remaining}
                 </p>
               </div>
             </div>
-
-            <button
-              onClick={() => deleteStudent(s.roll)}
-              className="bg-red-500 text-white px-3 py-1"
-            >
-              Delete
-            </button>
-          </div>
-        ))}
+          );
+        })}
       </div>
+      {/* Empty */}
+      {filteredData.length === 0 && (
+        <p className="text-center text-gray-500 mt-10">
+          No students found 🚫
+        </p>
+      )}
     </div>
   );
 };
-
-export default HighSchools;
+export default DegreeColleges;
