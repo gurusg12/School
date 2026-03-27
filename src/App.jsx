@@ -10,19 +10,27 @@ import Navbar from './Pages/NavBar'
 import ControllPanel from './Pages/ControllPanel'
 import AdmissionForm from './Pages/AdmissionForm'
 import StudentPortal from './Pages/StudentPortal'
-import Login from './Pages/Login'
 import Register from './Pages/Register'
 import Role from './Auth/Role'
+import Test from './Pages/Test'
+import Trust from './Trust/Trust'
+
+import Login from './Admin/Login'
+import Dashboarda from './Pages/Dashboarda'
+import Dashboard from './Admin/DashBoard'
+import StudentManagement from './Admin/Pages/StudentManagement'
+// import Dashboard from './Admin/DashBoard'
+import Registration from './Admin/Pages/Registration'
 
 const App = () => {
   return (
-    // 1. We use 'relative' and 'flex-col md:flex-row' to handle mobile stacking
-    <div className='flex flex-col md:flex-row h-screen w-screen bg-slate-100 overflow-hidden'>
-      <Navbar />
+    <div>
+      {/* <div className='flex flex-col md:flex-row h-screen w-screen bg-slate-100 overflow-hidden'>
       <main className='flex-1 h-full overflow-y-auto p-4 md:p-8'>
         <Routes>
           <Route path='/' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/trusts' element = {<Trust/>} />
           <Route path='/degree' element = {<Role roles={"degree"}>
             <DegreeColleges/>
           </Role>}/>
@@ -32,10 +40,40 @@ const App = () => {
           <Route path='/studentportal' element={<StudentPortal />} />
           <Route path='/paramedical' element={<Paramedical />} />
           <Route path='/primarySchools' element={<PrimarySchools />} />
-          {/* <Route path='/degreeColleges' element={<DegreeColleges />} /> */}
-          <Route path='/highSchools' element={<HighSchools />} />
-        </Routes>
+          <Route path='/degreeColleges' element={<DegreeColleges />} />
+          {/* {/* <Route path='/highSchools' element={<HighSchools />} /> */}
+      {/* </Routes> 
       </main>
+      <div>
+      </div> */}
+      {/* </div> */}
+
+
+
+
+
+
+      <Routes>
+        <Route path='/' element={<Login />} />
+        <Route path='/admin' element={<Dashboard />} />
+        <Route path='/studentmanagement' element={<StudentManagement />}>
+            <Route  path='studentdashboard' index element={<Dashboard/>}/>
+            <Route  path='registration' element={<Registration/>}/>
+        </Route>
+      </Routes>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import Dashboard from './DashBoard'
+import Dashboard from './Dashboarda'
 import Navbar from './NavBar'
 
 const Entry = () => {
