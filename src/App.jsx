@@ -16,11 +16,13 @@ import Test from './Pages/Test'
 import Trust from './Trust/Trust'
 
 import Login from './Admin/Login'
-import Dashboarda from './Pages/Dashboarda'
-import Dashboard from './Admin/DashBoard'
 import StudentManagement from './Admin/Pages/StudentManagement'
 // import Dashboard from './Admin/DashBoard'
 import Registration from './Admin/Pages/Registration'
+import Admin from './Admin/Admin'
+import AdminDashboard from './Admin/Pages/AdminDashboard'
+import Fee from './Admin/Pages/Fee'
+import Reports from './Admin/Pages/Reports'
 
 const App = () => {
   return (
@@ -54,11 +56,16 @@ const App = () => {
 
 
       <Routes>
-        <Route path='/' element={<Login />} />
-        <Route path='/admin' element={<Dashboard />} />
-        <Route path='/studentmanagement' element={<StudentManagement />}>
-            <Route  path='studentdashboard' index element={<Dashboard/>}/>
+        <Route path='/' element={<Login />} />       
+        <Route path='/admin' element={<Admin />}>
+        <Route  index element = {<AdminDashboard/>}/>
+        <Route path='studentmanagement' element={<StudentManagement />}>
             <Route  path='registration' element={<Registration/>}/>
+            <Route  path='feemanagement' element={<Fee/>}/>
+            <Route  path='reports' element={<Reports/>}/>
+
+
+        </Route>
         </Route>
       </Routes>
 

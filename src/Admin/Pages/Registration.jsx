@@ -1,171 +1,145 @@
 import React, { useState, useEffect } from 'react';
-import { UserPlus, Users, MapPin, BookOpen, Phone } from 'lucide-react';
+import { UserPlus, Trash2, Edit3, Save, X, Search } from 'lucide-react';
 
 const Registration = () => {
+  // 1. State Management
   const [students, setStudents] = useState([]);
   const [formData, setFormData] = useState({
-    name: '',
-    mobile: '',
-    city: '',
-    course: ''
+    id: '', name: '', number: '', city: '', course: ''
   });
+  const [isEditing, setIsEditing] = useState(false);
 
-  // Load data on initial mount
+  // 2. Load data from LocalStorage on mount
   useEffect(() => {
-    const savedStudents = JSON.parse(localStorage.getItem('student_records')) || [];
-    setStudents(savedStudents);
+    const savedStudents = localStorage.getItem('students');
+    if (savedStudents) {
+      setStudents(JSON.parse(savedStudents));
+    }
   }, []);
 
-  // Update localStorage whenever students list changes
+  // 3. Save to LocalStorage whenever students list changes
   useEffect(() => {
-    localStorage.setItem('student_records', JSON.stringify(students));
+    localStorage.setItem('students', JSON.stringify(students));
   }, [students]);
 
-  const generateStudentId = () => {
-    if (students.length === 0) return 'STU-1001';
-    const lastId = students[students.length - 1].id;
-    const lastNum = parseInt(lastId.split('-')[1]);
-    return `STU-${lastNum + 1}`;
+  // Handle Input Changes
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
+  // Add or Update Student
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    const newStudent = {
-      ...formData,
-      id: generateStudentId(),
-      dateAdded: new Date().toLocaleDateString()
-    };
+    if (isEditing) {
+      setStudents(students.map(s => s.id === formData.id ? formData : s));
+      setIsEditing(false);
+    } else {
+      const newStudent = { ...formData, id: `STU-${Date.now()}` };
+      setStudents([...students, newStudent]);
+    }
+    setFormData({ id: '', name: '', number: '', city: '', course: '' });
+  };
 
-    setStudents([...students, newStudent]);
-    
-    // Reset Form
-    setFormData({ name: '', mobile: '', city: '', course: '' });
+  // Delete Student
+  const deleteStudent = (id) => {
+    setStudents(students.filter(s => s.id !== id));
+  };
+
+  // Load into Edit Mode
+  const editStudent = (student) => {
+    setFormData(student);
+    setIsEditing(true);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8 font-sans">
-      <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* --- INPUT FORM CARD --- */}
+      <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+          <UserPlus className="text-blue-600" />
+          {isEditing ? 'Update Student' : 'Student Registration'}
+        </h2>
         
-        {/* Registration Header */}
-        <div className="flex items-center gap-3 mb-8">
-          <UserPlus className="text-blue-600" size={32} />
-          <h1 className="text-3xl font-bold text-gray-800">Student Registration</h1>
-        </div>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input type="text" disabled placeholder="ID Auto-generated" value={formData.id}
+            className="p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm italic" />
+          
+          <input type="text" name="name" required placeholder="Student Name" value={formData.name} onChange={handleChange}
+            className="p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" />
+          
+          <input type="text" name="number" required placeholder="Phone Number" value={formData.number} onChange={handleChange}
+            className="p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" />
+          
+          <input type="text" name="city" required placeholder="City" value={formData.city} onChange={handleChange}
+            className="p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" />
+          
+          <input type="text" name="course" required placeholder="Course & Class" value={formData.course} onChange={handleChange}
+            className="p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none md:col-span-2" />
 
-        {/* Form Section */}
-        <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Student Name</label>
-              <input
-                required
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                placeholder="Enter full name"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
-              <input
-                required
-                type="tel"
-                name="mobile"
-                value={formData.mobile}
-                onChange={handleInputChange}
-                className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                placeholder="Enter 10-digit mobile"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-              <input
-                required
-                name="city"
-                value={formData.city}
-                onChange={handleInputChange}
-                className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                placeholder="e.g. Bangalore"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Course</label>
-              <select
-                required
-                name="course"
-                value={formData.course}
-                onChange={handleInputChange}
-                className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white"
-              >
-                <option value="">Select Course</option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Information Science">Information Science</option>
-                <option value="Mechanical">Mechanical</option>
-                <option value="Electronics">Electronics</option>
-              </select>
-            </div>
-
-            <button
-              type="submit"
-              className="md:col-span-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors shadow-lg active:transform active:scale-95"
-            >
-              Register Student
+          <div className="md:col-span-2 flex gap-2 pt-2">
+            <button type="submit" className="flex-1 bg-blue-600 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors">
+              {isEditing ? <><Save size={18}/> Update</> : <><UserPlus size={18}/> Register Student</>}
             </button>
-          </form>
+            {isEditing && (
+              <button type="button" onClick={() => {setIsEditing(false); setFormData({id:'',name:'',number:'',city:'',course:''})}} 
+                className="px-6 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200">
+                Cancel
+              </button>
+            )}
+          </div>
+        </form>
+      </section>
+
+      {/* --- STUDENT LIST TABLE --- */}
+      <section className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="p-6 border-b border-gray-50 flex justify-between items-center">
+          <h2 className="text-xl font-bold text-gray-800">Student Directory</h2>
+          <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold">
+            {students.length} Total
+          </span>
         </div>
 
-        {/* Display List / Table */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead className="bg-gray-100 border-b border-gray-200">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-gray-50 text-gray-500 text-xs uppercase font-bold">
+              <tr>
+                <th className="px-6 py-4">Student ID</th>
+                <th className="px-6 py-4">Name</th>
+                <th className="px-6 py-4">Course</th>
+                <th className="px-6 py-4 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {students.length === 0 ? (
                 <tr>
-                  <th className="px-6 py-4 text-sm font-semibold text-gray-600">ID</th>
-                  <th className="px-6 py-4 text-sm font-semibold text-gray-600">Name</th>
-                  <th className="px-6 py-4 text-sm font-semibold text-gray-600">Course</th>
-                  <th className="px-6 py-4 text-sm font-semibold text-gray-600">City</th>
+                  <td colSpan="4" className="px-6 py-10 text-center text-gray-400">No students registered yet.</td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {students.map((stu) => (
-                  <tr key={stu.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 font-mono text-sm text-blue-600">{stu.id}</td>
-                    <td className="px-6 py-4 text-gray-800">{stu.name}</td>
-                    <td className="px-6 py-4 text-gray-600">{stu.course}</td>
-                    <td className="px-6 py-4 text-gray-600">{stu.city}</td>
-                  </tr>
-                ))}
-                {students.length === 0 && (
-                  <tr>
-                    <td colSpan="4" className="px-6 py-10 text-center text-gray-400 italic">
-                      No student records found.
+              ) : (
+                students.map((s) => (
+                  <tr key={s.id} className="hover:bg-blue-50/30 transition-colors group">
+                    <td className="px-6 py-4 text-sm font-mono text-gray-400">{s.id.slice(-6)}</td>
+                    <td className="px-6 py-4">
+                      <div className="font-bold text-gray-800">{s.name}</div>
+                      <div className="text-xs text-gray-500">{s.city} • {s.number}</div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">{s.course}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onClick={() => editStudent(s)} className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg">
+                          <Edit3 size={18} />
+                        </button>
+                        <button onClick={() => deleteStudent(s.id)} className="p-2 text-red-600 hover:bg-red-100 rounded-lg">
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
-
-        {/* Footer Summary */}
-        <div className="mt-6 flex items-center justify-between bg-blue-50 border border-blue-100 p-4 rounded-xl">
-          <div className="flex items-center gap-2 text-blue-800">
-            <Users size={20} />
-            <span className="font-medium">Total Registered Students:</span>
-          </div>
-          <span className="text-2xl font-bold text-blue-700">{students.length}</span>
-        </div>
-      </div>
+      </section>
     </div>
   );
 };
