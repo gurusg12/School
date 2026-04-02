@@ -122,6 +122,8 @@ const Registerstd = () => {
                   { name: "className", placeholder: "Assigned Class", icon: <GraduationCap size={18} />, type: "text" },
                   { name: "mobile", placeholder: "Mobile Number", icon: <Phone size={18} />, type: "number" },
                   { name: "address", placeholder: "Residential Address", icon: <MapPin size={18} />, type: "text" },
+                  { name: "totalFee", placeholder: "totalFee", icon: <MapPin size={18} />, type: "number" },
+
                 ].map((field) => (
                   <div key={field.name} className="relative group">
                     <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors">
