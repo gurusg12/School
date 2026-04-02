@@ -52,32 +52,35 @@ const AdminDashboard = () => {
   }, [filteredData]);
 
   // 📑 PDF Export Logic
-  const handleExportPDF = () => {
-    const doc = new jsPDF();
-    doc.setFontSize(20);
-    doc.text("Organization Academic Report", 14, 22);
-    doc.setFontSize(10);
-    doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 30);
-    
-    const tableRows = filteredData.map(s => [
-      s.studentName,
-      s.branchName,
-      s.className,
-      `INR ${s.paid || 0}`,
-      `INR ${s.remaining || 0}`,
-      s.remaining === 0 ? "PAID" : "PENDING"
-    ]);
+const handleExportPDF = () => {
+  const doc = new jsPDF();
 
-    doc.autoTable({
-      startY: 35,
-      head: [['Student Name', 'Branch', 'Class', 'Paid', 'Pending', 'Status']],
-      body: tableRows,
-      theme: 'grid',
-      headStyles: { fillColor: [99, 102, 241] }
-    });
+  doc.setFontSize(20);
+  doc.text("Organization Academic Report", 14, 22);
 
-    doc.save(`Report_${new Date().getTime()}.pdf`);
-  };
+  doc.setFontSize(10);
+  doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 30);
+
+  const tableRows = filteredData.map((s) => [
+    s.studentName,
+    s.branchName,
+    s.className,
+    `INR ${s.paid || 0}`,
+    `INR ${s.remaining || 0}`,
+    s.remaining === 0 ? "PAID" : "PENDING",
+  ]);
+
+  // ✅ use autoTable like this
+  autoTable(doc, {
+    startY: 35,
+    head: [["Student Name", "Branch", "Class", "Paid", "Pending", "Status"]],
+    body: tableRows,
+    theme: "grid",
+    headStyles: { fillColor: [99, 102, 241] },
+  });
+
+  doc.save(`Report_${Date.now()}.pdf`);
+};
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-8 space-y-8 pb-20">
