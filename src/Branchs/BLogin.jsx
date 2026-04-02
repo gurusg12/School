@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const BLogin = () => {
@@ -8,7 +8,9 @@ const BLogin = () => {
   const [message, setMessage] = useState("");
 
   const Navigate = useNavigate()
-
+useEffect(()=>{
+localStorage.removeItem("loggedBranch")
+}, [])
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -37,7 +39,7 @@ const BLogin = () => {
       localStorage.setItem("loggedBranch", JSON.stringify(loginData));
 
       setMessage("✅ Login Successful");
-      Navigate('/branch/bdash')
+      Navigate('/branch')
     } else {
       setMessage("❌ Invalid Branch Name or Code");
     }

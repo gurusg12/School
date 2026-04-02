@@ -28,6 +28,7 @@ import Registerstd from './Branchs/Registerstd'
 import BDash from './Branchs/BDash'
 import Pay from './Branchs/Pay'
 import BHome from './Branchs/BHome'
+import Logout from './Branchs/Logout'
 
 const App = () => {
   return (
@@ -67,10 +68,10 @@ const App = () => {
         <Route path='/' element={<Login />} />  
         <Route path='/branchsRegister' element = {<Add/>}/>   
         <Route path='/branch' element = {<BHome/>}>
-          <Route path='bdash' element  = {<BDash/>}/>
+          <Route   index  element  = {<BDash/>}/>
           <Route path='blogin' element  = {<BLogin/>}/>
-
           <Route path='paystd' element  = {<Pay/>}/>
+          <Route path='logout' element  = {<Logout/>}/>
           <Route path='studentRegister' element = {<Registerstd/>}/>
         </Route>
         <Route path='/admin' element={<Admin />}>

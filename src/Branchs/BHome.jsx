@@ -11,10 +11,12 @@ import {
 
 const BHome = () => {
   const navItems = [
-    { path: 'blogin', label: 'Login', icon: <LogIn size={20} /> },
-    { path: 'bdash', label: 'Dash', icon: <LayoutDashboard size={20} /> },
+    { path: 'logout', label: 'LogOut', icon: <LogIn size={20} /> },
+    { path: '/branch', label: 'Dash', icon: <LayoutDashboard size={20} /> },
     { path: 'paystd', label: 'Fees', icon: <Wallet size={20} /> },
     { path: 'studentRegister', label: 'Register', icon: <UserPlus size={20} /> },
+    { path: '/', label: 'Exit', icon: <UserPlus size={20} /> },
+
   ];
 
   return (

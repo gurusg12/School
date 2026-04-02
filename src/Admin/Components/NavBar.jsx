@@ -7,10 +7,10 @@ const Navbar = () => {
 
   const navItems = [
     { name: 'Home', path: '/admin', icon: <Home size={20} /> },
-    { name: 'Profile', path: '/profile', icon: <User size={20} /> },
-    { name: 'Settings', path: '/settings', icon: <Settings size={20} /> },
+    { name: 'Profile', path: '/admin', icon: <User size={20} /> },
+    { name: 'Settings', path: '/admin', icon: <Settings size={20} /> },
     { name: 'StudenManagement', path: '/admin/studentmanagement', icon: <School2 size={20} /> },
-    { name: 'Branches', path: '/admin/branchs', icon: <School2 size={20} /> },
+    { name: 'Branches', path: '/branch', icon: <School2 size={20} /> },
 
 
   ];

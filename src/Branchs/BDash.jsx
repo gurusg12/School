@@ -8,6 +8,7 @@ import {
   TrendingUp, Users, Wallet, AlertCircle, 
   ArrowUpRight, Building2, User
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const COLORS = ["#6366f1", "#f43f5e", "#10b981"];
 
@@ -15,8 +16,11 @@ const BDash = () => {
   const [branch, setBranch] = useState(null);
   const [students, setStudents] = useState([]);
   const [stats, setStats] = useState({ revenue: 0, pending: 0, total: 0 });
+  const navigate = useNavigate()
+
 
   useEffect(() => {
+    
     const logged = JSON.parse(localStorage.getItem("loggedBranch"));
     const allStudents = JSON.parse(localStorage.getItem("students")) || [];
 
@@ -32,6 +36,10 @@ const BDash = () => {
       }), { revenue: 0, pending: 0, total: 0 });
 
       setStats(totals);
+    }
+    else{
+      navigate('/branch/blogin')
+
     }
   }, []);
 
