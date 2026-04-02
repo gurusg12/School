@@ -117,12 +117,12 @@ const Fee = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Total Course Fee</label>
-                  <input type="number" required className="w-full p-4 bg-blue-50/50 border-none rounded-2xl font-bold text-blue-700 text-lg" value={paymentData.totalFee} onChange={(e) => setPaymentData({...paymentData, totalFee: e.target.value})} />
+                  <input placeholder='total fee' type="number" required className="w-full p-4 bg-blue-50/50 border-none rounded-2xl font-bold text-blue-700 text-lg" value={paymentData.totalFee} onChange={(e) => setPaymentData({...paymentData, totalFee: e.target.value})} />
                 </div>
                 
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Amount Paying Now</label>
-                  <input type="number" required className="w-full p-4 bg-green-50 border-none rounded-2xl font-bold text-green-700 text-lg" value={paymentData.amountToPay} onChange={(e) => setPaymentData({...paymentData, amountToPay: e.target.value})} />
+                  <input placeholder='payable amount' type="number" required className="w-full p-4 bg-green-50 border-none rounded-2xl font-bold text-green-700 text-lg" value={paymentData.amountToPay} onChange={(e) => setPaymentData({...paymentData, amountToPay: e.target.value})} />
                 </div>
 
                 <div className="md:col-span-2 space-y-1">

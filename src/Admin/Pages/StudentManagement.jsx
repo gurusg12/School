@@ -7,7 +7,7 @@ const StudentManagement = () => {
     { to: "registration", label: "Register", icon: <UserPlus size={22} /> },
     { to: "feemanagement", label: "Pay Fee", icon: <Wallet size={22} /> },
     { to: "receipts", label: "History", icon: <Receipt size={22} /> },
-    { to: "reports", label: "Student-Reports", icon: <Receipt size={22} /> },
+    { to:"/admin/studentmanagement" , label: "Student-Reports", icon: <Receipt size={22} /> },
 
     { to: "settings", label: "Settings", icon: <Settings size={22} /> },
   ];

@@ -12,8 +12,6 @@ import AdmissionForm from './Pages/AdmissionForm'
 import StudentPortal from './Pages/StudentPortal'
 import Register from './Pages/Register'
 import Role from './Auth/Role'
-import Test from './Pages/Test'
-import Trust from './Trust/Trust'
 
 import Login from './Admin/Login'
 import StudentManagement from './Admin/Pages/StudentManagement'
@@ -23,6 +21,13 @@ import Admin from './Admin/Admin'
 import AdminDashboard from './Admin/Pages/AdminDashboard'
 import Fee from './Admin/Pages/Fee'
 import Reports from './Admin/Pages/Reports'
+import Branchs from './Admin/Pages/Branchs'
+import Add from './Branchs/Add'
+import BLogin from './Branchs/BLogin'
+import Registerstd from './Branchs/Registerstd'
+import BDash from './Branchs/BDash'
+import Pay from './Branchs/Pay'
+import BHome from './Branchs/BHome'
 
 const App = () => {
   return (
@@ -56,15 +61,25 @@ const App = () => {
 
 
       <Routes>
-        <Route path='/' element={<Login />} />       
+
+
+
+        <Route path='/' element={<Login />} />  
+        <Route path='/branchsRegister' element = {<Add/>}/>   
+        <Route path='/branch' element = {<BHome/>}>
+          <Route path='bdash' element  = {<BDash/>}/>
+          <Route path='blogin' element  = {<BLogin/>}/>
+
+          <Route path='paystd' element  = {<Pay/>}/>
+          <Route path='studentRegister' element = {<Registerstd/>}/>
+        </Route>
         <Route path='/admin' element={<Admin />}>
         <Route  index element = {<AdminDashboard/>}/>
+        <Route  path='branchs' element = {<Branchs/>}/>
         <Route path='studentmanagement' element={<StudentManagement />}>
             <Route  path='registration' element={<Registration/>}/>
             <Route  path='feemanagement' element={<Fee/>}/>
-            <Route  path='reports' element={<Reports/>}/>
-
-
+            <Route  index element={<Reports/>}/>
         </Route>
         </Route>
       </Routes>
