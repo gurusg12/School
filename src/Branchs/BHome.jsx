@@ -15,6 +15,8 @@ const BHome = () => {
     { path: '/branch', label: 'Dash', icon: <LayoutDashboard size={20} /> },
     { path: 'paystd', label: 'Fees', icon: <Wallet size={20} /> },
     { path: 'studentRegister', label: 'Register', icon: <UserPlus size={20} /> },
+    { path: 'admit', label: 'Admission', icon: <UserPlus size={20} /> },
+
     { path: '/', label: 'Exit', icon: <UserPlus size={20} /> },
 
   ];

@@ -116,6 +116,7 @@ const BDash = () => {
           { label: "Total Fee", val: stats.total, icon: <Wallet /> },
           { label: "Revenue", val: stats.revenue, icon: <TrendingUp /> },
           { label: "Pending", val: stats.pending, icon: <AlertCircle /> },
+          
         ].map((item, i) => (
           <motion.div
             key={i}
