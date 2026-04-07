@@ -38,10 +38,10 @@ const Add = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="w-full">
       
       {/* Form */}
-      <div className="max-w-xl mx-auto bg-white shadow-lg rounded-2xl p-6">
+      <div className="max-w-xl bg-white shadow-lg rounded-2xl p-6">
         <h1 className="text-2xl font-bold mb-4 text-gray-800">
           Add Branch
         </h1>
@@ -73,7 +73,7 @@ const Add = () => {
       </div>
 
       {/* Branch List */}
-      <div className="max-w-6xl mx-auto mt-10">
+      <div className="mt-10">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">
           Existing Branches
         </h2>

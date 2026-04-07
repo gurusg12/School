@@ -4,11 +4,20 @@ import { Outlet } from 'react-router-dom'
 
 const Admin = () => {
   return (
-    <div>
-      <div>
-        <NavBar/>
-      </div>
-      <Outlet/>
+    <div className="min-h-screen bg-gray-50">
+      
+      {/* Sidebar / Bottom Nav */}
+      <NavBar />
+
+      {/* Main Content */}
+      <main className="
+        md:ml-64 
+        px-4 py-4 
+        pb-20 md:pb-6
+      ">
+        <Outlet />
+      </main>
+
     </div>
   )
 }
