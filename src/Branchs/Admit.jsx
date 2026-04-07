@@ -146,8 +146,6 @@ const Admit = () => {
             onChange={handleChange}
             className="border p-3 w-full rounded"
           />
-
-          {/* 🔥 Auto Balance */}
           <input
             type="number"
             value={admission.balance}
