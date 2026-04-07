@@ -62,6 +62,9 @@ const App = () => {
 
 
       <Routes>
+
+
+
         <Route path='/' element={<Login />} />  
         <Route path='/branchsRegister' element = {<Add/>}/>   
         <Route path='/branch' element = {<BHome/>}>
@@ -81,6 +84,19 @@ const App = () => {
         </Route>
         </Route>
       </Routes>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   )
 }
