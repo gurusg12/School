@@ -63,9 +63,6 @@ const App = () => {
 
 
       <Routes>
-
-
-
         <Route path='/' element={<Login />} />  
         <Route path='/branchsRegister' element = {<Add/>}/>   
         <Route path='/branch' element = {<BHome/>}>
@@ -77,13 +74,13 @@ const App = () => {
           <Route path='studentRegister' element = {<Registerstd/>}/>
         </Route>
         <Route path='/admin' element={<Admin />}>
-        <Route  index element = {<AdminDashboard/>}/>
-        <Route  path='branchs' element = {<Branchs/>}/>
-        <Route path='studentmanagement' element={<StudentManagement />}>
-            <Route  path='registration' element={<Registration/>}/>
+             <Route  index element = {<AdminDashboard/>}/>
+            <Route  path='branchs' element = {<Branchs/>}/>
+             <Route path='studentmanagement' element={<StudentManagement />}>
+             <Route  path='registration' element={<Registration/>}/>
             <Route  path='feemanagement' element={<Fee/>}/>
             <Route  index element={<Reports/>}/>
-        </Route>
+           </Route>
         </Route>
       </Routes>
 
