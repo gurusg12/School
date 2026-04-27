@@ -104,7 +104,7 @@ const AdminDashboard = () => {
 
       {/* HEADER */}
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+        <h1 className="text-2xl text-amber-400 font-bold">Admin Dashboard</h1>
         <button
           onClick={handleExportPDF}
           className="bg-blue-600 text-white px-4 py-2 rounded flex gap-2"
